@@ -1,7 +1,9 @@
 #!/bin/bash
 set -e
 
-APP=/opt/hax-bot
+APP=/opt/hax-bot-6.4
+
+echo "HAX BOT 6.4 INSTALL"
 
 apt update -y
 apt install -y python3 python3-pip python3-venv git
@@ -18,14 +20,14 @@ pip install -r requirements.txt
 
 mkdir -p data logs
 
-echo "TOKEN:"
-read TOKEN
+read -p "TOKEN: " TOKEN
 echo $TOKEN > token.txt
 
-echo "INTERVAL:"
-read INTERVAL
+read -p "INTERVAL(default30): " INTERVAL
 INTERVAL=${INTERVAL:-30}
 echo $INTERVAL > interval.txt
 
 nohup python -m app.collector.runner > logs/collector.log 2>&1 &
 nohup python -m app.bot.main > logs/bot.log 2>&1 &
+
+echo "DONE"

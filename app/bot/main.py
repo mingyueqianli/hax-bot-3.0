@@ -1,5 +1,5 @@
 from telegram import Update
-from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
+from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
 
 COMMAND_MAP = {
     "1": "start",
@@ -13,19 +13,38 @@ COMMAND_MAP = {
     "9": "cancel"
 }
 
+WELCOME = """HAX BOT 6.4 企业版
+
+机器管理:
+/new
+/info
+/rename
+/delmachine
+
+监控:
+/monitor
+/alert
+
+系统:
+/status
+/stats
+/version
+/help
+
+控制:
+/setinterval
+"""
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = (
-        "🚀 欢迎使用 HAX BOT 6.3 企业版\n\n"
-        "📦 /new /info /rename /delmachine\n"
-        "📊 /monitor /setinterval /stats\n"
-        "🧠 /help /status /version"
-    )
-    await update.message.reply_text(text)
+    await update.message.reply_text(WELCOME)
+
+async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(WELCOME)
 
 async def router(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    t = update.message.text.strip()
-    if t in COMMAND_MAP:
-        await update.message.reply_text("/" + COMMAND_MAP[t])
+    text = update.message.text.strip()
+    if text in COMMAND_MAP:
+        await update.message.reply_text("/" + COMMAND_MAP[text])
 
 async def setinterval(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
@@ -44,6 +63,7 @@ def main():
     app = Application.builder().token(token).build()
 
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("help", help_cmd))
     app.add_handler(CommandHandler("setinterval", setinterval))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, router))
 
