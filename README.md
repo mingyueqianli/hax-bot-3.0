@@ -1,2 +1,1 @@
-# HAX BOT 6.0
-Ready Package
+# HAX BOT 6.3 READY FOR GITHUB
