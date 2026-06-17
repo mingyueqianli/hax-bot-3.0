@@ -18,6 +18,7 @@ NC='\033[0m'
 log_info() { echo -e "${GREEN}[INFO]${NC} $1"; }
 log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+log_step() { echo -e "${BLUE}[STEP]${NC} $1"; }
 
 echo "🚀 HAX BOT 7.7 安装脚本（优化版）"
 
@@ -61,7 +62,7 @@ if [ ! -f "requirements.txt" ]; then
     exit 1
 fi
 
-log_info "✅ requirements.txt 存在，内容如下："
+log_info "✅ requirements.txt 存在"
 cat requirements.txt
 echo ""
 
